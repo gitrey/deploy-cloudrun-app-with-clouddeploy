@@ -283,6 +283,23 @@ Review deployed applications in Cloud Run:
 
 ![Cloud Build](./images/cloud-run-services.png)
 
+## Test deployed applications
+
+Run command below in the Cloud Shell.
+
+```shell
+REGION=us-west1
+DEV_SERVICE_URL=$(gcloud run services describe app-dev \
+  --platform managed \
+  --region $REGION \
+  --format=json | jq \
+  --raw-output ".status.url")
+
+echo $DEV_SERVICE_URL
+curl  -H "Authorization: Bearer $(gcloud auth print-identity-token)" $DEV_SERVICE_URL
+echo -e "\nResponse: ^^^^"
+```
+
 ## Congratulations!
 Congratulations, you finished the codelab!
 
